@@ -1,6 +1,13 @@
-import org.junit.Test;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ROT13Test {
 
@@ -86,6 +93,27 @@ public class ROT13Test {
         System.out.println(actual);
         // Then
         assertTrue(actual.equals(Q1));
+    }
+
+    @Test
+    public void encryptFileTest1() {
+        ROT13 rot13 = new ROT13();
+//        rot13.encryptFile(new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt"));
+        String expected = rot13.encrypt("This file needs to be read and encrypted. " +
+                "It can also be used for file reading practice!");
+        String actual = rot13.encryptFile(new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt"), "BogusFile");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void encryptFileTest2() {
+        ROT13 rot13 = new ROT13();
+        File file = new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt");
+//        rot13.encryptFile(new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt"));
+        String expected = rot13.encrypt("This file needs to be read and encrypted. " +
+                                "It can also be used for file reading practice!");
+        String actual = rot13.encryptFile(file, "BogusFile");
+        assertEquals(expected, actual);
     }
 
 }
