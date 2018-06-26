@@ -62,12 +62,48 @@ public class ROT13 {
         return builder.toString();
     }
 
+    class EncryptOffset {
+
+        private int offset;
+        private boolean isOffset;
+
+        public EncryptOffset(Character offset) {
+            super();
+            this.offset = offset;
+            isOffset = false;
+        }
+
+        public String encryptWithOffset(String text) {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < text.length(); i++)
+            {
+                if (isOffset = false) {
+                    sb = (!Character.isLetter(text.charAt(i))) ? sb.append(text.charAt(i)) :
+                            (Character.isUpperCase(text.charAt(i))) ?
+                                    sb.append((char) (((int) text.charAt(i) + shifter - 65) % 26 + 65)) :
+                                    sb.append((char) (((int) text.charAt(i) + shifter - 97) % 26 + 97));
+                    isOffset = true;
+                } else if (isOffset = true){
+                    sb = (!Character.isLetter(text.charAt(i))) ? sb.append(text.charAt(i)) :
+                            (Character.isUpperCase(text.charAt(i))) ?
+                                    sb.append((char) ((((int) text.charAt(i) + shifter - 65) - offset) % 26 + 65)) :
+                                    sb.append((char) ((((int) text.charAt(i) + shifter - 97) - offset) % 26 + 97));
+                    isOffset = false;
+                }
+            }
+            return sb.toString();
+        }
+    }
 
     public static void main(String[] args)
     {
         ROT13 rot13 = new ROT13();
         File file = new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt");
-        rot13.encryptFile(file, "/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/IamEncrypted.txt");
+       // rot13.encryptFile(file, "/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/IamEncrypted.txt");
+        ROT13.EncryptOffset encryptOffset =  rot13.new EncryptOffset('b');
+        System.out.println(encryptOffset.encryptWithOffset
+                ("This file needs to be read and encrypted. It can also be used for file reading practice!"));
     }
 
 
