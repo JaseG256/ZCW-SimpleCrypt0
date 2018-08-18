@@ -62,12 +62,17 @@ public class ROT13 {
         return builder.toString();
     }
 
+    public String cryptOffset(String text, int offset) {
+        EncryptOffset encryptOffset = new EncryptOffset(offset);
+        return encryptOffset.encryptWithOffset(text);
+    }
+
     class EncryptOffset {
 
         private int offset;
         private boolean isOffset;
 
-        public EncryptOffset(Character offset) {
+        public EncryptOffset(int offset) {
             super();
             this.offset = offset;
             isOffset = false;
@@ -82,13 +87,14 @@ public class ROT13 {
                     sb = (!Character.isLetter(text.charAt(i))) ? sb.append(text.charAt(i)) :
                             (Character.isUpperCase(text.charAt(i))) ?
                                     sb.append((char) (((int) text.charAt(i) + shifter - 65) % 26 + 65)) :
-                                    sb.append((char) (((int) text.charAt(i) + shifter - 97) % 26 + 97));
+                                    sb.append((char) (((int) text.charAt(i) + (shifter - offset) - 97) % 26 + 97));
                     isOffset = true;
+
                 } else if (isOffset = true){
                     sb = (!Character.isLetter(text.charAt(i))) ? sb.append(text.charAt(i)) :
                             (Character.isUpperCase(text.charAt(i))) ?
                                     sb.append((char) ((((int) text.charAt(i) + shifter - 65) - offset) % 26 + 65)) :
-                                    sb.append((char) ((((int) text.charAt(i) + shifter - 97) - offset) % 26 + 97));
+                                    sb.append((char) ((((int) text.charAt(i) + (shifter - offset) - 97) ) % 26 + 97));
                     isOffset = false;
                 }
             }
@@ -100,10 +106,13 @@ public class ROT13 {
     {
         ROT13 rot13 = new ROT13();
         File file = new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/EnCryptMe.txt");
-       // rot13.encryptFile(file, "/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/IamEncrypted.txt");
-        ROT13.EncryptOffset encryptOffset =  rot13.new EncryptOffset('b');
-        System.out.println(encryptOffset.encryptWithOffset
-                ("This file needs to be read and encrypted. It can also be used for file reading practice!"));
+       // rot13.encryptFile(file, c);
+//        ROT13.EncryptOffset encryptOffset =  rot13.new EncryptOffset('b');
+        File encryptedFile = new File("/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/IamEncrypted.txt");
+//        System.out.println(encryptOffset.encryptWithOffset
+//                ("This file needs to be read and encrypted. It can also be used for file reading practice!"));
+        rot13.encryptFile(encryptedFile,
+                "/Users/jasong/Labs/ZCW-ORM-SimpleAccount/.idea/IamDecrypted.txt");
     }
 
 

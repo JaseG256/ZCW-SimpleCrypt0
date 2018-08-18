@@ -116,4 +116,12 @@ public class ROT13Test {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void encryptWithOffsetTest() {
+        ROT13 rot13 = new ROT13();
+        String text = "abcdefghi";
+        String expected = "nppqsstvv";
+        String actual = rot13.cryptOffset(text, 4);
+        assertEquals(expected, actual);
+    }
 }
